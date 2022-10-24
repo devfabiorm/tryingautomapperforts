@@ -7,7 +7,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get(':username')
-  public findOne(@Param() username: string): UserDto {
+  public findOne(@Param('username') username: string): UserDto {
     return this.usersService.getUserByUsername(username);
   }
 }
