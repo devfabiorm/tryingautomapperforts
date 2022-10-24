@@ -1,4 +1,4 @@
-import { createMap, forMember, mapFrom, MappingProfile, typeConverter } from "@automapper/core";
+import { CamelCaseNamingConvention, createMap, forMember, mapFrom, MappingProfile, namingConventions, typeConverter } from "@automapper/core";
 import type { Mapper } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from "@automapper/nestjs";
 import { Injectable } from "@nestjs/common";
@@ -19,7 +19,8 @@ export class UserProfile extends AutomapperProfile {
         mapper,
         Bio,
         BioDto,
-        typeConverter(Date, String, (date) => date.toDateString())
+        typeConverter(Date, String, (date) => date.toDateString()),
+        namingConventions(new CamelCaseNamingConvention())
         );
       createMap(
         mapper,
