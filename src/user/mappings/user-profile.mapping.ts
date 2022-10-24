@@ -1,4 +1,4 @@
-import { createMap, forMember, mapFrom, MappingProfile } from "@automapper/core";
+import { createMap, forMember, mapFrom, MappingProfile, typeConverter } from "@automapper/core";
 import type { Mapper } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from "@automapper/nestjs";
 import { Injectable } from "@nestjs/common";
@@ -15,8 +15,17 @@ export class UserProfile extends AutomapperProfile {
 
   get profile(): MappingProfile {
     return (mapper) => {
-      createMap(mapper, Bio, BioDto);
-      createMap(mapper, User, UserDto, forMember(
+      createMap(
+        mapper,
+        Bio,
+        BioDto,
+        typeConverter(Date, String, (date) => date.toDateString())
+        );
+      createMap(
+        mapper,
+        User,
+        UserDto,
+        forMember(
         (destination) => destination.fullName,
         mapFrom((source) => source.firstName + ' ' + source.lastName)
       ));

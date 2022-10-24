@@ -10,7 +10,7 @@ export class UsersRepository {
       password: "123456",
       username: "tester",
       bio: {
-        avatarUrl: "",
+        avatarUrl: "htp://teste.com",
         birthday: new Date(),
         job: {
           salary: 1000,
