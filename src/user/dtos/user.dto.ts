@@ -1,21 +1,19 @@
-import { User } from "../models/user.entity";
+import { AutoMap } from "@automapper/classes";
 import { BioDto } from "./bio.dto";
 
 export class UserDto {
+  @AutoMap()
   firstName: string;
+
+  @AutoMap()
   lastName: string;
+
+  @AutoMap()
   fullName: string;
-  userName: string;
+
+  @AutoMap()
+  username: string;
+
+  @AutoMap(() => BioDto)
   bio: BioDto;
-
-  static fromUser(user: User) {
-    const dto = new UserDto();
-    dto.firstName = user.firstName;
-    dto.lastName = user.lastName;
-    dto.fullName = user.firstName + ' ' + user.lastName;
-    dto.userName = user.username;
-    dto.bio = BioDto.fromBio(user.bio);
-
-    return dto;
-  }
 }

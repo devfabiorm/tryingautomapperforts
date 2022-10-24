@@ -1,18 +1,15 @@
-import { Bio } from "../models/bio.entity";
+import { AutoMap } from "@automapper/classes";
 
 export class BioDto {
+  @AutoMap()
   jobTitle: string;
+
+  @AutoMap()
   jobSalary: number;
+
+  @AutoMap()
   birthday: string;
+
+  @AutoMap()
   avatarUrl: string;
-
-  static fromBio(bio: Bio) {
-    const dto = new BioDto();
-    dto.jobTitle = bio.job.title;
-    dto.jobSalary = bio.job.salary;
-    dto.birthday = bio.birthday.toDateString();
-    dto.avatarUrl = bio.avatarUrl;
-
-    return dto;
-  }
 }
