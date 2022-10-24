@@ -16,7 +16,10 @@ export class UserProfile extends AutomapperProfile {
   get profile(): MappingProfile {
     return (mapper) => {
       createMap(mapper, Bio, BioDto);
-      createMap(mapper, User, UserDto);
+      createMap(mapper, User, UserDto, forMember(
+        (destination) => destination.fullName,
+        mapFrom((source) => source.firstName + ' ' + source.lastName)
+      ));
     };
   }
 }
