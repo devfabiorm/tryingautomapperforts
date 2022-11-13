@@ -1,4 +1,4 @@
-import { createMap, forMember, mapFrom } from '@automapper/core';
+import { constructUsing, createMap } from '@automapper/core';
 import type { Mapper } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
@@ -17,21 +17,17 @@ export class AnimeProfile extends AutomapperProfile {
         mapper,
         MalData,
         Anime,
-        forMember(
-          (destination) => destination.title,
-          mapFrom(
-            (source) =>
-              source.titles.find((title) => title.type === 'Default')?.title,
-          ),
-        ),
-        forMember(
-          (destination) => destination.aireFrom,
-          mapFrom((source) => source.aired.from),
-        ),
-        forMember(
-          (destination) => destination.airedTo,
-          mapFrom((source) => source.aired.to),
-        ),
+        constructUsing((source, destination) => {
+          const anime = new Anime(source.mal_id);
+          const obj = {
+            title: source.titles.find((title) => title.type === 'Default')
+              ?.title,
+            aireFrom: source.aired.from,
+            airedTo: source.aired.to,
+          } as Anime;
+
+          return Object.assign(anime, obj);
+        }),
       );
     };
   }
